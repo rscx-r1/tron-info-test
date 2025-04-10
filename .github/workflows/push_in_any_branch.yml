@@ -32,7 +32,8 @@ jobs:
 
       - name: Копирование env.example
         run: |
-          cp -r .env.test.example .env.test
+          cp .env.test.example .env.test
+          cp .env.example .env
 
       - name: Тесты в Docker-контейнере
         run: |
