@@ -1,4 +1,5 @@
 """Модуль для юнит-тестирования DAO для работы с Tron."""
+
 from decimal import Decimal
 
 from sqlalchemy.ext.asyncio import AsyncSession
