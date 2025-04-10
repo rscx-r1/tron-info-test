@@ -11,11 +11,11 @@ from src.tron.schemas import (
 )
 from src.tron.services import TronService
 
-auth_router = APIRouter(prefix="/tron/", tags=["Кошелек Tron"])
+tron_router = APIRouter(prefix="/tron", tags=["Кошелек Tron"])
 
 
 # MARK: POST
-@auth_router.post(
+@tron_router.post(
     "/read_info",
     summary="Получить информацию о кошельке.",
     status_code=status.HTTP_200_OK,
@@ -28,20 +28,20 @@ async def read_info(
     Получить информацию о кошельке
     """
 
-    return await TronService.read_wallet_info(
+    return await TronService.get_wallet_info(
         data=data,
         session=session,
     )
 
 
 # MARK: GET
-@auth_router.get(
+@tron_router.get(
     "/get",
     summary="Получить информацию о кошельке.",
     status_code=status.HTTP_200_OK,
 )
 async def get_requests(
-    data: TronWalletSchema,
+    address: str,
     offset: Optional[int] = None,
     limit: Optional[int] = None,
     session: AsyncSession = Depends(get_session),
@@ -51,7 +51,7 @@ async def get_requests(
     """
 
     return await TronService.get_requests(
-        data=data,
+        address=address,
         offset=offset,
         limit=limit,
         session=session,

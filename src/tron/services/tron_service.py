@@ -37,41 +37,46 @@ class TronService:
         try:
             account = client.get_account(data.address)
             balance = client.get_account_balance(data.address)
-
+            print(account, balance)
             tron_request_db = await TronRequestDAO.add(
                 session=session,
                 obj_in=TronRequestCreateSchema(
                     address=data.address,
-                    bandwidth=account.get("data", [{}])[0].get("net_limit", 0),
-                    energy=account.get("data", [{}])[0].get("energy_limit", 0),
+                    bandwidth=account.get("net_window_size", 0),
+                    energy=account.get("account_resource", {}).get(
+                        "energy_window_size", 0
+                    ),
                     trx_balance=balance,
                 ),
             )
+
             if not tron_request_db:
                 raise exceptions.InternalServerException
+            await session.commit()
 
             return TronRequestReadSchema(
                 id=tron_request_db.id,
                 address=data.address,
-                bandwith=tron_request_db.bandwidth,
+                bandwidth=tron_request_db.bandwidth,
                 energy=tron_request_db.energy,
                 trx_balance=tron_request_db.trx_balance,
                 created_at=tron_request_db.created_at,
             )
-        except Exception:
+        except Exception as e:
+            print(e)
             raise exceptions.TronAPIException
 
     @classmethod
     async def get_requests(
         cls,
         session: AsyncSession,
-        data: TronWalletSchema,
+        address: str,
         offset: Optional[int] = None,
         limit: Optional[int] = None,
     ) -> TronRequestReadListSchema:
         tron_requests: List[TronRequestModel] = await TronRequestDAO.find_all(
+            address=address,
             session=session,
-            address=data.address,
             offset=offset,
             limit=limit,
         )

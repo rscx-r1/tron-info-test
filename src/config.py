@@ -2,7 +2,8 @@ import os
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-ENVIRONMENT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ENVIRONMENT_FILE = os.path.join(BASE_DIR, ".env")
 
 
 class ProjectSettings(BaseSettings):

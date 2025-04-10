@@ -1,1 +1,2 @@
-uvicorn src.main:app --reload
+#!/bin/sh
+uvicorn src.main:app --host 0.0.0.0
