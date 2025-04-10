@@ -34,36 +34,34 @@ class TronService:
             )
         )
 
-        try:
-            account = client.get_account(data.address)
-            balance = client.get_account_balance(data.address)
+        # try:
+        account = client.get_account(data.address)
+        balance = client.get_account_balance(data.address)
 
-            tron_request_db = await TronRequestDAO.add(
-                session=session,
-                obj_in=TronRequestCreateSchema(
-                    address=data.address,
-                    bandwidth=account.get("net_window_size", 0),
-                    energy=account.get("account_resource", {}).get(
-                        "energy_window_size", 0
-                    ),
-                    trx_balance=balance,
-                ),
-            )
-
-            if not tron_request_db:
-                raise exceptions.InternalServerException
-            await session.commit()
-
-            return TronRequestReadSchema(
-                id=tron_request_db.id,
+        tron_request_db = await TronRequestDAO.add(
+            session=session,
+            obj_in=TronRequestCreateSchema(
                 address=data.address,
-                bandwidth=tron_request_db.bandwidth,
-                energy=tron_request_db.energy,
-                trx_balance=tron_request_db.trx_balance,
-                created_at=tron_request_db.created_at,
-            )
-        except Exception:
-            raise exceptions.TronAPIException
+                bandwidth=account.get("net_window_size", 0),
+                energy=account.get("account_resource", {}).get("energy_window_size", 0),
+                trx_balance=balance,
+            ),
+        )
+
+        if not tron_request_db:
+            raise exceptions.InternalServerException
+        await session.commit()
+
+        return TronRequestReadSchema(
+            id=tron_request_db.id,
+            address=data.address,
+            bandwidth=tron_request_db.bandwidth,
+            energy=tron_request_db.energy,
+            trx_balance=tron_request_db.trx_balance,
+            created_at=tron_request_db.created_at,
+        )
+        # except Exception:
+        #    raise exceptions.TronAPIException
 
     @classmethod
     async def get_requests(
