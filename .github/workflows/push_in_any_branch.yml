@@ -2,7 +2,7 @@ name: Ruff линтер проверка & Бэкэнд-тесты
 
 on:
   pull_request:
-    branches: ["**"]
+    branches: ["main"]
 
 jobs:
   lint:
