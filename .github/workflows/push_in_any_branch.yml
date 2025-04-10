@@ -26,6 +26,7 @@ jobs:
     name: Бэкэнд-тесты
     runs-on: ubuntu-latest
     env:
+      ENV: test
       TRON_API_KEY: ${{ secrets.TRON_API_KEY }}
     needs: lint
     steps:

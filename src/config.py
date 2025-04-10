@@ -1,4 +1,5 @@
 import os
+from functools import lru_cache
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -39,6 +40,11 @@ class ProjectSettings(BaseSettings):
         else ENVIRONMENT_FILE,
         extra="allow",
     )
+
+
+@lru_cache()
+def get_project_settings() -> ProjectSettings:
+    return ProjectSettings()
 
 
 project_settings = ProjectSettings()
