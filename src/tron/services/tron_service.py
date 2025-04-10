@@ -1,5 +1,6 @@
 """Сервисный слой для работы с Tron."""
 
+import os
 from typing import List, Optional
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -30,7 +31,9 @@ class TronService:
         client = Tron(
             HTTPProvider(
                 endpoint_uri=constants.TRON_API_URL,
-                api_key=project_settings.TRON_API_KEY,
+                api_key=project_settings.TRON_API_KEY
+                if project_settings.ENV == "production"
+                else os.getenv("TRON_API_KEY"),
             )
         )
 
