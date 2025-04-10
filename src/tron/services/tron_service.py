@@ -37,7 +37,7 @@ class TronService:
         try:
             account = client.get_account(data.address)
             balance = client.get_account_balance(data.address)
-            print(account, balance)
+
             tron_request_db = await TronRequestDAO.add(
                 session=session,
                 obj_in=TronRequestCreateSchema(
@@ -62,8 +62,7 @@ class TronService:
                 trx_balance=tron_request_db.trx_balance,
                 created_at=tron_request_db.created_at,
             )
-        except Exception as e:
-            print(e)
+        except Exception:
             raise exceptions.TronAPIException
 
     @classmethod
