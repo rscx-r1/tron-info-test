@@ -1,4 +1,3 @@
-import os
 from decimal import Decimal
 from unittest.mock import patch
 
@@ -36,9 +35,7 @@ class TestTronRouter(EndpointTestHelper):
 
         mock_get_account.return_value = {
             "net_window_size": 123456,
-            "account_resource": {
-                "energy_window_size": 654321
-            }
+            "account_resource": {"energy_window_size": 654321},
         }
         mock_get_balance.return_value = Decimal("100.5")
 
@@ -79,9 +76,7 @@ class TestTronRouter(EndpointTestHelper):
 
         mock_get_account.return_value = {
             "net_window_size": 222222,
-            "account_resource": {
-                "energy_window_size": 333333
-            }
+            "account_resource": {"energy_window_size": 333333},
         }
         mock_get_balance.return_value = Decimal("42.42")
 
