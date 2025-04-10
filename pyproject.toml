@@ -1,0 +1,31 @@
+[project]
+name = "tron-info-test"
+version = "0.1.0"
+description = "Микросервис для получения информации о кошельках в сети TRON"
+requires-python = ">=3.11"
+dependencies = [
+    "asyncpg>=0.30.0",
+    "sqlalchemy>=2.0.37",
+    "tronpy==0.5.0",
+    "fastapi[all]==0.115.0",
+    "pydantic>=2.11.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest-asyncio==0.20.3",
+    "pytest==7.2.1",
+    "pytest-mock>=3.14.0",
+    "faker>=33.3.1",
+    "ruff>=0.9.1",
+    "httpx>=0.25.2",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+python_files = ["test_*.py"] 
+addopts = [
+    "--import-mode=importlib"
+]
+asyncio_mode = "auto"

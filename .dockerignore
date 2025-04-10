@@ -1,0 +1,29 @@
+# Git
+.git
+.gitignore
+.github
+
+# Byte-compiled / optimized / DLL files
+**/__pycache__
+**/*.pyc
+
+# Unit test
+.pytest_cache
+
+# Environments
+**/*.env*
+.venv
+
+# Docker
+docker-compose*
+Dockerfile
+.docker
+.dockerignore
+
+# Docs
+docs
+**/*.md
+
+# Configuration
+Makefile
+.ruff_cache
