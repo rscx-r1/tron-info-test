@@ -54,9 +54,7 @@ class TronWalletSchema(BaseModel):
     @field_validator("address")
     def validate_address(cls, value: str) -> str:
         if not value.startswith("T"):
-            raise exceptions.InvalidTRONAddressException(
-                "Адрес кошелька должен начинаться с символа 'T'."
-            )
+            raise exceptions.InvalidTRONAddressException
         return value
 
 
