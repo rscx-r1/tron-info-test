@@ -20,6 +20,9 @@ class ProjectSettings(BaseSettings):
 
     ENV: str
     APP_PORT: str
+    
+    # MARK: TronAPI
+    TRON_API_KEY: str
 
     @property
     def POSTGRESQL_URL(self):

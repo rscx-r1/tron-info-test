@@ -59,7 +59,4 @@ cp .env.example .env
 ```bash
 # Для Unix
 ./run.sh
-
-# Для Windows
-run.bat
 ```
