@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import SessionLocal
 
+
 # MARK: DB
 async def get_session() -> AsyncGenerator[AsyncSession, None]:
     """

@@ -11,7 +11,7 @@ class InvalidTRONAddressException(HTTPException):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Адрес кошелька должен начинаться с символа 'T'.",
         )
-        
+
 
 class TronAPIException(HTTPException):
     """
@@ -35,4 +35,3 @@ class InternalServerException(HTTPException):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Внутренняя ошибка сервера.",
         )
-
