@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 
-from src.config import project_settings
+from src.config import get_project_settings
 from src.tron.routers import tron_router
 
 app = FastAPI(
     title="Tron Info Test",
-    version=project_settings.VERSION,
+    version=get_project_settings().VERSION,
 )
 
 available_routers = [

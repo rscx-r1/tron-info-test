@@ -6,7 +6,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
-from src.config import project_settings
+from src.config import get_project_settings
 from src.database import Base
 
 config = context.config
@@ -18,7 +18,7 @@ target_metadata = Base.metadata
 
 
 def get_url():
-    return project_settings.POSTGRESQL_URL
+    return get_project_settings().POSTGRESQL_URL
 
 
 def run_migrations_offline() -> None:

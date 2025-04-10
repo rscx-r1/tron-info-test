@@ -45,6 +45,3 @@ class ProjectSettings(BaseSettings):
 @lru_cache()
 def get_project_settings() -> ProjectSettings:
     return ProjectSettings()
-
-
-project_settings = ProjectSettings()

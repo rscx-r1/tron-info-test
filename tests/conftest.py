@@ -15,7 +15,7 @@ from sqlalchemy.ext.asyncio import (
 from alembic.config import Config
 from alembic.runtime.migration import MigrationContext
 from alembic.script import ScriptDirectory
-from src.config import project_settings
+from src.config import get_project_settings
 from src.tron.schemas import TronWalletSchema
 
 faker = Faker()
@@ -33,7 +33,7 @@ async def engine(event_loop):
     """
     Создает async engine для тестирования.
     """
-
+    project_settings = get_project_settings()
     engine = create_async_engine(
         url=(
             f"postgresql+asyncpg://{project_settings.POSTGRES_USER}:{project_settings.POSTGRES_PASSWORD}@"
@@ -50,6 +50,7 @@ async def test_engine():
     """
     Создает async engine для тестирования.
     """
+    project_settings = get_project_settings()
     engine = create_async_engine(
         url=(
             f"postgresql+asyncpg://{project_settings.POSTGRES_USER}:{project_settings.POSTGRES_PASSWORD}@"
