@@ -31,11 +31,10 @@ class TestTronRouter(EndpointTestHelper):
 
         response = await async_test_client.post(
             url="/tron/read_info",
-            content=correct_tron_wallet.model_dump_json().encode(),
-            headers={"Content-Type": "application/json"},
+            json=correct_tron_wallet.model_dump(),
         )
         response_data = response.json()
-        print(response_data)
+
         assert response.status_code == status.HTTP_200_OK
         assert response_data is not None
         assert response_data["address"] == correct_tron_wallet.address
