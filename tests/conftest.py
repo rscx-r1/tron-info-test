@@ -37,7 +37,7 @@ async def engine(event_loop):
     engine = create_async_engine(
         url=(
             f"postgresql+asyncpg://{project_settings.POSTGRES_USER}:{project_settings.POSTGRES_PASSWORD}@"
-            f"{project_settings.POSTGRES_HOST}"
+            f"{project_settings.POSTGRES_HOST}:{project_settings.POSTGRES_PORT}/{project_settings.POSTGRES_DB}"
         ),
         poolclass=NullPool,
     )
@@ -69,17 +69,10 @@ async def test_engine():
 
 async def do_run_migrations(connection):
     """Применяет миграции к базе данных."""
-    context = MigrationContext.configure(connection)
-    script = ScriptDirectory.from_config(Config("alembic.ini"))
+    from alembic import command
 
-    current_rev = context.get_current_revision()
-
-    head_rev = script.get_current_head()
-
-    if current_rev != head_rev:
-        for rev in script.walk_revisions():
-            if rev.revision == head_rev:
-                await connection.execute(rev.upgrade_script())
+    alembic_cfg = Config("alembic.ini")
+    command.upgrade(alembic_cfg, "head")
 
 
 async def do_downgrade_migrations(connection):
