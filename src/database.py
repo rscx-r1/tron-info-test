@@ -26,6 +26,7 @@ engine = create_async_engine(
     project_settings.POSTGRESQL_URL,
     poolclass=NullPool,
     pool_pre_ping=True,
+    echo=True,
 )
 
 SessionLocal = async_sessionmaker(

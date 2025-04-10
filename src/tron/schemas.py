@@ -23,7 +23,7 @@ class TronRequestReadSchema(BaseModel):
 
     id: uuid.UUID = Field(description="`id` запроса в БД.")
     address: str = Field(description="Адрес кошелька.")
-    bandwith: int = Field(
+    bandwidth: int = Field(
         description="Количество использованной пропускной способности."
     )
     energy: int = Field(description="Количество использованной энергии.")

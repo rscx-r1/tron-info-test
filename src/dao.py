@@ -4,7 +4,6 @@ from pydantic import BaseModel
 from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src import constants
 from src.database import Base
 
 ModelType = TypeVar("ModelType", bound=Base)
@@ -29,7 +28,12 @@ class BaseDAO(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         Добавить запись в текущую сессию.
         """
-        stmt = insert(cls.model).values(**obj_in)
+        if isinstance(obj_in, dict):
+            data = obj_in
+        else:
+            data = obj_in.model_dump(exclude_unset=True)
+
+        stmt = insert(cls.model).values(**data).returning(cls.model)
         result = await session.execute(stmt)
         return result.scalars().one()
 
@@ -38,8 +42,8 @@ class BaseDAO(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     async def find_all(
         cls,
         session: AsyncSession,
-        offset: Optional[int] = constants.PAGINATION_DEFAULT_OFFSET,
-        limit: Optional[int] = constants.PAGINATION_DEFAULT_LIMIT,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
         *filter,
         **filter_by,
     ) -> List[ModelType]:
@@ -54,5 +58,6 @@ class BaseDAO(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             .offset(offset)
             .limit(limit)
         )
+        print(stmt)
         result = await session.execute(stmt)
         return result.scalars().all()
