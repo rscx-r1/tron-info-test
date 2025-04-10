@@ -49,7 +49,6 @@ class TestTronRouter(EndpointTestHelper):
         assert response_data["address"] == correct_tron_wallet.address
         assert Decimal(response_data["trx_balance"]) == Decimal("100.5")
 
-        # Проверка, что запись появилась в базе
         result = await session.execute(
             select(TronRequestModel).where(
                 TronRequestModel.address == correct_tron_wallet.address
@@ -80,13 +79,11 @@ class TestTronRouter(EndpointTestHelper):
         }
         mock_get_balance.return_value = Decimal("42.42")
 
-        # Сначала создадим запись
         await async_test_client.post(
             url="/tron/read_info",
             json=correct_tron_wallet.model_dump(),
         )
 
-        # Теперь получаем список
         response = await async_test_client.get(
             url="/tron/get",
             params={"address": correct_tron_wallet.address, "limit": 10, "offset": 0},
