@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.orm import DeclarativeBase
 
-from src.config import get_project_settings
+from src.config import project_settings
 
 DB_NAMING_CONVENTION = {
     "ix": "%(column_0_label)s_idx",
@@ -23,7 +23,7 @@ class Base(AsyncAttrs, DeclarativeBase):
 
 
 engine = create_async_engine(
-    get_project_settings().POSTGRESQL_URL,
+    project_settings.POSTGRESQL_URL,
     poolclass=NullPool,
     pool_pre_ping=True,
     echo=True,

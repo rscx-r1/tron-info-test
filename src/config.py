@@ -1,5 +1,4 @@
 import os
-from functools import lru_cache
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -42,6 +41,4 @@ class ProjectSettings(BaseSettings):
     )
 
 
-@lru_cache()
-def get_project_settings() -> ProjectSettings:
-    return ProjectSettings()
+project_settings = ProjectSettings()

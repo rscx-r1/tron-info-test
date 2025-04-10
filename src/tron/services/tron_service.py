@@ -7,7 +7,7 @@ from tronpy import Tron
 from tronpy.providers import HTTPProvider
 
 from src import constants, exceptions
-from src.config import get_project_settings
+from src.config import project_settings
 from src.tron.dao import TronRequestDAO
 from src.tron.models.tron import TronRequestModel
 from src.tron.schemas import (
@@ -30,7 +30,7 @@ class TronService:
         client = Tron(
             HTTPProvider(
                 endpoint_uri=constants.TRON_API_URL,
-                api_key=get_project_settings().TRON_API_KEY,
+                api_key=project_settings.TRON_API_KEY,
             )
         )
 
