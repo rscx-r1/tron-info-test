@@ -1,5 +1,6 @@
 """Модуль для тестирования эндпоинтов `auth_router`."""
 
+import os
 from decimal import Decimal
 
 import httpx
@@ -28,7 +29,7 @@ class TestTronRouter(EndpointTestHelper):
         """
         Возможно получить информацию о правильном кошельке.
         """
-
+        print("API ключ установлен? ", bool(os.getenv("TRON_API_KEY")))
         response = await async_test_client.post(
             url="/tron/read_info",
             json=correct_tron_wallet.model_dump(),
